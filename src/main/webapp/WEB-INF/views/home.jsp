@@ -7,5 +7,6 @@
 </head>
 <body>
 	<p>Palvelimelta saatu teksti: ${viesti}.</p>
+	
 </body>
 </html>
