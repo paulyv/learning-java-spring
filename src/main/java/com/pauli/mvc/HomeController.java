@@ -1,15 +1,18 @@
 package com.pauli.mvc;
 
+import java.util.ArrayList;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
 public class HomeController {
+	
+	ArrayList<Person> lista = new ArrayList<>();
 	
 	@RequestMapping("/")
 	public String view(Model model) {
@@ -27,15 +30,18 @@ public class HomeController {
 		return "sijainti";
 	}
 	
-	@RequestMapping("/presidentti")
-	public String pressa() {
-		return "persons";
+	// Tulosta vieraat
+	@RequestMapping("/vieraslista")
+	public String visitors(Model model) {
+		model.addAttribute("vieraat", lista);
+		return "guests";
 	}
 	
-	@RequestMapping(value = "/person", method = RequestMethod.POST)
-	@ResponseBody
-	public String post(@RequestParam String name) {
-		return "Olet presidentti: " + name + " :D:D";
+	// Lis‰‰ uusi vieras 
+	@RequestMapping(value = "/addGuest", method = RequestMethod.POST)
+	public String post(@RequestParam String name, @RequestParam int age) {
+		lista.add(new Person(name, age));
+		return "redirect:/vieraslista";
 	}
 	
 	
